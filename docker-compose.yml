@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  apache:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./public_html:/var/www/html
+      - ./configs/apache/apache2.conf:/etc/apache2/apache2.conf
+    depends_on:
+      - mysql
+      - phpmyadmin
+
+  mysql:
+    image: mysql
+    restart: always
+    volumes:
+      - ./databases:/bin/db_resources
+      - ../mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
