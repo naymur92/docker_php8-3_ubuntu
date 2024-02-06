@@ -19,7 +19,6 @@ services:
     restart: always
     volumes:
       - ./databases:/bin/db_resources
-      - ../mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
 
