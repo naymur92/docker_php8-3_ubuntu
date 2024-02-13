@@ -8,20 +8,14 @@ RUN apt-get update && \
 # Add the ondrej/php repository which contains PHP 8.3 packages
 RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 
-# Add NodeSource repository for Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-
 # Update package lists again
 RUN apt-get update
 
-# Install Apache, PHP latest, required PHP extensions, Node.js and npm
-RUN apt-get install -y apache2 php8.3 libapache2-mod-php8.3 openssl php8.3-bcmath php8.3-curl php8.3-common php8.3-mbstring php8.3-mysql php8.3-mysqli php8.3-tokenizer php8.3-xml php8.3-zip php8.3-soap && \
-    # curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    # apt-get install -y nodejs && \
+# Install curl, Apache, PHP 8.3, required PHP extensions and Node.js 20 with npm
+RUN apt-get install -y curl apache2 php8.3 libapache2-mod-php8.3 openssl php8.3-bcmath php8.3-curl php8.3-common php8.3-mbstring php8.3-mysql php8.3-mysqli php8.3-tokenizer php8.3-xml php8.3-zip php8.3-soap && \
+    curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
     apt-get clean
-
-# Install npm
-RUN apt-get install -y npm
 
 # Install Composer
 RUN php -r "copy('https://composer.github.io/installer.sig', 'composer-setup.sig');" && \
