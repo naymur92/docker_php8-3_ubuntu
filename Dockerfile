@@ -2,7 +2,10 @@ FROM ubuntu:20.04
 
 # Install software-properties-common to add repositories
 RUN apt-get update && \
-    apt-get install -y software-properties-common && \
+    apt-get install -y software-properties-common \
+    vim \
+    nano \
+    apache2-utils && \
     apt-get clean
 
 # Add the ondrej/php repository which contains PHP 8.3 packages
@@ -25,8 +28,15 @@ RUN php -r "copy('https://composer.github.io/installer.sig', 'composer-setup.sig
     php -r "unlink('composer-setup.php');" && \
     php -r "unlink('composer-setup.sig');"
 
-# Enable Apache modules
+# Enable mod_rewrite for Laravel
 RUN a2enmod rewrite
+
+# Copy the virtual host configuration files
+# COPY ./configs/apache/sites-available /etc/apache2/sites-available
+
+# Enable the sites
+# RUN a2ensite pauthadmin.test.conf
+# RUN a2ensite ims.test.conf
 
 # Expose port
 EXPOSE 80
