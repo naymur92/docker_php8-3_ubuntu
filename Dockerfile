@@ -39,7 +39,7 @@ RUN a2enmod rewrite
 # RUN a2ensite ims.test.conf
 
 # Expose port
-EXPOSE 80
+EXPOSE 85
 
 # Start Apache in the foreground
 CMD ["apache2ctl", "-D", "FOREGROUND"]
